@@ -4,6 +4,7 @@ const imageGauche = document.getElementById('image-gauche');
 const imageDroite = document.getElementById('image-droite');
 let resultatGauche = document.getElementById('resultat-gauche');
 let resultatDroite = document.getElementById('resultat-droite');
+let aclick = false;
 
 function choixAleatoire() {
   return choixPossible[Math.floor(Math.random() * choixPossible.length)];
@@ -12,13 +13,13 @@ function choixAleatoire() {
 imageGauche.addEventListener('click', function () {
   const choixJoueur1 = choixAleatoire();
   afficherImageGauche(choixJoueur1);
-  jouer("pierre");
+  jouer(choixJoueur1);
 });
 
 imageDroite.addEventListener('click', function () {
   const choixJoueur2 = choixAleatoire();
   afficherImageDroite(choixJoueur2, 'droite');
-  jouer("pierre");
+  jouer(choixJoueur2,'');
 });
 function afficherImageGauche(choixJoueur) {
   imageGauche.style.backgroundImage = 'url(images-pfc/' + choixJoueur + '.jpg)';
