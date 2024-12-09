@@ -29,13 +29,11 @@ function determinerGagnant(joueur1, joueur2) {
 }
 
 function afficherResultatTexte(resultat, gauche, droite) {
-  // Supprime les anciens messages "Gagné/Perdu/Égalité" avant d'ajouter les nouveaux
   const ancienTexteGauche = gauche.querySelector(".resultat-texte");
   const ancienTexteDroite = droite.querySelector(".resultat-texte");
   if (ancienTexteGauche) ancienTexteGauche.remove();
   if (ancienTexteDroite) ancienTexteDroite.remove();
 
-  // Crée de nouveaux éléments pour afficher le texte
   const texteGauche = document.createElement("div");
   const texteDroite = document.createElement("div");
 
@@ -56,14 +54,13 @@ function afficherResultatTexte(resultat, gauche, droite) {
     texteDroite.textContent = "Gagné";
   }
 
-  // Ajoute les messages sous les mots "pierre", "feuille", "ciseau"
   gauche.appendChild(texteGauche);
   droite.appendChild(texteDroite);
 }
 
 function appliquerCouleurResultat(resultat, gauche, droite) {
-  gauche.style.backgroundColor = "";
-  droite.style.backgroundColor = "";
+  const hauteurPage = window.innerHeight;
+  const largeurPage = window.innerWidth;
 
   if (resultat === "Égalité") {
     gauche.style.backgroundColor = "yellow";
@@ -75,6 +72,18 @@ function appliquerCouleurResultat(resultat, gauche, droite) {
     gauche.style.backgroundColor = "red";
     droite.style.backgroundColor = "green";
   }
+
+  gauche.style.height = (hauteurPage / 2) * 1.5 + "px";
+  droite.style.height = (hauteurPage / 2) * 1.5 + "px";
+
+  gauche.style.width = largeurPage / 2 + "px";
+  droite.style.width = largeurPage / 2 + "px";
+
+  gauche.style.display = "inline-block";
+  droite.style.display = "inline-block";
+
+  gauche.style.position = "relative";  // Ajouté pour positionner les éléments à l'intérieur
+  droite.style.position = "relative";  // Ajouté pour positionner les éléments à l'intérieur
 }
 
 function jouer() {
@@ -87,11 +96,11 @@ function jouer() {
   resultatGauche.textContent = choixJoueur1;
   resultatDroite.textContent = choixJoueur2;
 
-  appliquerCouleurResultat(determinerGagnant(choixJoueur1, choixJoueur2), resultatGauche, resultatDroite);
-  afficherResultatTexte(determinerGagnant(choixJoueur1, choixJoueur2), resultatGauche, resultatDroite);
+  const resultat = determinerGagnant(choixJoueur1, choixJoueur2);
+  appliquerCouleurResultat(resultat, resultatGauche, resultatDroite);
+  afficherResultatTexte(resultat, resultatGauche, resultatDroite);
 }
 
 boutonRejouer.addEventListener("click", jouer);
 
-// Lancer un premier tour automatiquement
 jouer();
